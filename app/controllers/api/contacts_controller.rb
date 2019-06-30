@@ -6,7 +6,7 @@ class Api::ContactsController < ApplicationController
 
   def show
     @contact = Contact.find_by(id: params["id"])
-    render "contact.json.jb"
+    render "show.json.jb"
   end
 
   def create

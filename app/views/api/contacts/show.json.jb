@@ -5,5 +5,7 @@
   last_name: @contact.last_name,
   email: @contact.email,
   phone_number: @contact.phone_number,
+  full_name: @contact.full_name,
+  friendly_updated_at: @contact.friendly_updated_at,
 
 }
