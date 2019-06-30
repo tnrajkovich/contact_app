@@ -2,7 +2,9 @@
 {
   id: contact.id,
   first_name: contact.first_name,
+  middle_name: contact.middle_name,
   last_name: contact.last_name,
+  biography: contact.biography,
   email: contact.email,
   phone_number: contact.phone_number,
   full_name: contact.full_name,
