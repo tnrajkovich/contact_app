@@ -1,6 +1,11 @@
 class Api::ContactsController < ApplicationController
   def index
     @contact = Contact.all
+
+    if params[:search]
+      @contact = @contact.where["first_name ILIKE ? OR last_name ILIKE ? OR middle_name ILIKE ? OR biography ILIKE ? OR email ILIKE ? OR phone_number ILIKE ?", "#{params[:search]}", "#{params[:search]}", "#{params[:search]}", "#{params[:search]}", "#{params[:search]}", "#{params[:search]}"]
+    end
+
     render "all_contacts.json.jb"
   end
 
@@ -18,8 +23,11 @@ class Api::ContactsController < ApplicationController
       email: params["email"],
       phone_number: params["phone_number"],
     )
-    @contact.save
-    render "all_contacts.json.jb"
+    if @contact.save
+      render "all_contacts.json.jb"
+    else
+      render json: { errors: @contact.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   def update
@@ -30,8 +38,11 @@ class Api::ContactsController < ApplicationController
     @contact.biography = params["biography"] || @contact.biography
     @contact.email = params["email"] || @contact.email
     @contact.phone_number = params["phone_number"] || @contact.phone_number
-    @contact.save
-    render "show.json.jb"
+    if @contact.save
+      render "all_contacts.json.jb"
+    else
+      render json: { errors: @contact.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   def delete
